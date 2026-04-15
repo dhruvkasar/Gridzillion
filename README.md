@@ -30,4 +30,4 @@ Experience a beautiful Bauhaus-inspired UI with smooth animations and dynamic au
 3. **Advanced Mode:** Placing a tile that traps your opponent's tiles between two of yours will flip them to your color!
 
 ## 👨‍💻 Authors
-Built by **Dhruv Kasar** and **Harshil**.
+Built by **Dhruv** and **Aditya**.
