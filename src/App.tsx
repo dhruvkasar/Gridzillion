@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Volume2, VolumeX, RotateCcw, Monitor, User, Github, Instagram, Share2, Music, Info, X } from 'lucide-react';
+import { Volume2, VolumeX, RotateCcw, Monitor, User, Github, Instagram, Share2, Music, Info, X, ChevronRight, Target, Swords, MousePointerClick } from 'lucide-react';
 import { useAudio } from './hooks/useAudio';
 
 type Player = 1 | 2;
@@ -315,40 +315,47 @@ const CreatorLink = ({ name, github, insta }: { name: string, github: string, in
   );
 };
 
-const Onboarding = ({ step, onNext }: { step: number, onNext: () => void }) => {
+const Onboarding = ({ step, onNext, onSkip }: { step: number, onNext: () => void, onSkip: () => void }) => {
   return (
     <div className="min-h-screen w-screen bg-bauhaus-bg flex items-center justify-center p-4 font-sans">
       <AnimatePresence mode="wait">
         {step === 0 && (
           <motion.div 
             key="step0"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, x: -100 }}
-            className="bg-white border-4 border-bauhaus-black hard-shadow p-8 max-w-md w-full text-center flex flex-col items-center"
+            className="bg-white border-4 border-bauhaus-black hard-shadow-lg overflow-hidden max-w-3xl w-full flex flex-col md:flex-row"
           >
-            <h2 className="text-4xl font-bold uppercase tracking-tighter mb-4 text-bauhaus-black">Color War</h2>
-            <p className="text-lg mb-8 font-medium text-gray-700">A strategic game of territorial dominance. Paint the grid, trap your opponent, and claim the most squares to win.</p>
-            
-            <div className="flex justify-center gap-4 mb-10">
-              <motion.div 
-                animate={{ scale: [1, 1.1, 1], rotate: [0, 90, 90] }} 
-                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }} 
-                className="w-16 h-16 bg-bauhaus-red border-4 border-bauhaus-black hard-shadow-sm" 
-              />
-              <motion.div 
-                animate={{ scale: [1, 1.1, 1], rotate: [0, -90, -90] }} 
-                transition={{ repeat: Infinity, duration: 2, delay: 1, ease: "easeInOut" }} 
-                className="w-16 h-16 bg-bauhaus-blue border-4 border-bauhaus-black hard-shadow-sm" 
-              />
+            <div className="p-8 md:w-1/2 flex flex-col justify-center">
+              <div className="flex items-center gap-3 mb-4">
+                <Target className="text-bauhaus-red" size={32} />
+                <h2 className="text-3xl font-bold uppercase tracking-tight text-bauhaus-black">The Objective</h2>
+              </div>
+              <p className="text-gray-600 font-medium mb-8 leading-relaxed text-lg">
+                Color War is a strategic game of territorial expansion. Your goal is simple: have the most squares of your color when the board is completely full.
+              </p>
+              
+              <div className="flex gap-4 mt-auto">
+                <button onClick={onSkip} className="px-6 py-2 border-2 border-gray-300 text-gray-500 font-bold uppercase hover:bg-gray-50 transition-colors cursor-pointer">Skip</button>
+                <button onClick={onNext} className="flex-1 bg-bauhaus-yellow border-2 border-bauhaus-black px-6 py-2 font-bold uppercase hover:translate-y-1 hover:translate-x-1 hard-shadow-sm hover:shadow-none transition-all flex justify-center items-center gap-2 cursor-pointer">
+                  Next <ChevronRight size={20} />
+                </button>
+              </div>
             </div>
-
-            <button 
-              onClick={onNext} 
-              className="bg-bauhaus-yellow border-4 border-bauhaus-black px-8 py-3 font-bold uppercase text-xl hover:translate-y-1 hover:translate-x-1 hard-shadow-sm hover:shadow-none focus-visible:ring-4 focus-visible:ring-bauhaus-blue focus-visible:outline-none transition-all w-full cursor-pointer"
-            >
-              Next
-            </button>
+            <div className="bg-bauhaus-yellow/20 md:w-1/2 p-8 flex items-center justify-center border-t-4 md:border-t-0 md:border-l-4 border-bauhaus-black">
+              <div className="grid grid-cols-4 gap-1 p-2 bg-bauhaus-black border-4 border-bauhaus-black hard-shadow-sm w-48 h-48">
+                {Array.from({length: 16}).map((_, i) => (
+                  <motion.div 
+                    key={i}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1, backgroundColor: i % 3 === 0 ? '#E8312B' : (i % 2 === 0 ? '#2B67F6' : '#FFFFFF') }}
+                    transition={{ delay: i * 0.1, duration: 0.3 }}
+                    className="w-full h-full"
+                  />
+                ))}
+              </div>
+            </div>
           </motion.div>
         )}
 
@@ -357,41 +364,106 @@ const Onboarding = ({ step, onNext }: { step: number, onNext: () => void }) => {
             key="step1"
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="bg-white border-4 border-bauhaus-black hard-shadow p-8 max-w-md w-full text-center flex flex-col items-center"
+            exit={{ opacity: 0, x: -100 }}
+            className="bg-white border-4 border-bauhaus-black hard-shadow-lg overflow-hidden max-w-3xl w-full flex flex-col md:flex-row"
           >
-            <h2 className="text-3xl font-bold uppercase tracking-tighter mb-4 text-bauhaus-black">How to Play</h2>
-            <p className="text-base mb-8 font-medium text-gray-700">Place your color adjacent to existing tiles. In <span className="text-bauhaus-red font-bold">Advanced</span> mode, flank your opponent's tiles to flip them to your color!</p>
-            
-            <div className="grid grid-cols-3 gap-1 bg-bauhaus-black border-4 border-bauhaus-black p-1 w-32 h-32 mb-10 hard-shadow-sm">
-              {/* Row 1 */}
-              <div className="bg-bauhaus-red w-full h-full" />
-              <motion.div 
-                animate={{ backgroundColor: ['#2B67F6', '#2B67F6', '#E8312B', '#E8312B'] }}
-                transition={{ repeat: Infinity, duration: 3, times: [0, 0.4, 0.6, 1] }}
-                className="w-full h-full" 
-              />
-              <motion.div 
-                animate={{ backgroundColor: ['#FFFFFF', '#E8312B', '#E8312B', '#FFFFFF'] }}
-                transition={{ repeat: Infinity, duration: 3, times: [0, 0.3, 0.8, 1] }}
-                className="w-full h-full" 
-              />
-              {/* Row 2 */}
-              <div className="bg-white w-full h-full" />
-              <div className="bg-white w-full h-full" />
-              <div className="bg-white w-full h-full" />
-              {/* Row 3 */}
-              <div className="bg-white w-full h-full" />
-              <div className="bg-white w-full h-full" />
-              <div className="bg-white w-full h-full" />
+            <div className="p-8 md:w-1/2 flex flex-col justify-center">
+              <div className="flex items-center gap-3 mb-4">
+                <MousePointerClick className="text-bauhaus-blue" size={32} />
+                <h2 className="text-3xl font-bold uppercase tracking-tight text-bauhaus-black">Basic Rules</h2>
+              </div>
+              <p className="text-gray-600 font-medium mb-8 leading-relaxed text-lg">
+                You can only place a tile adjacent to an existing tile on the board. Block your opponent's path to limit their moves and control the board.
+              </p>
+              
+              <div className="flex gap-4 mt-auto">
+                <button onClick={onSkip} className="px-6 py-2 border-2 border-gray-300 text-gray-500 font-bold uppercase hover:bg-gray-50 transition-colors cursor-pointer">Skip</button>
+                <button onClick={onNext} className="flex-1 bg-bauhaus-blue text-white border-2 border-bauhaus-black px-6 py-2 font-bold uppercase hover:translate-y-1 hover:translate-x-1 hard-shadow-sm hover:shadow-none transition-all flex justify-center items-center gap-2 cursor-pointer">
+                  Next <ChevronRight size={20} />
+                </button>
+              </div>
             </div>
+            <div className="bg-bauhaus-blue/10 md:w-1/2 p-8 flex items-center justify-center border-t-4 md:border-t-0 md:border-l-4 border-bauhaus-black">
+              <div className="grid grid-cols-3 gap-1 p-1 bg-bauhaus-black border-4 border-bauhaus-black hard-shadow-sm w-40 h-40 relative">
+                {Array.from({length: 9}).map((_, i) => {
+                  if (i === 4) return <div key={i} className="bg-bauhaus-red w-full h-full" />;
+                  if (i === 1) return (
+                    <motion.div key={i} 
+                      animate={{ backgroundColor: ['#FFFFFF', '#fca5a5', '#E8312B', '#E8312B'] }}
+                      transition={{ repeat: Infinity, duration: 2, times: [0, 0.4, 0.6, 1] }}
+                      className="w-full h-full relative"
+                    >
+                      <motion.div 
+                        animate={{ opacity: [0, 1, 0, 0] }}
+                        transition={{ repeat: Infinity, duration: 2, times: [0, 0.2, 0.4, 1] }}
+                        className="absolute inset-0 flex items-center justify-center"
+                      >
+                        <MousePointerClick size={24} className="text-bauhaus-black" />
+                      </motion.div>
+                    </motion.div>
+                  );
+                  return <div key={i} className="bg-white w-full h-full" />;
+                })}
+              </div>
+            </div>
+          </motion.div>
+        )}
 
-            <button 
-              onClick={onNext} 
-              className="bg-bauhaus-red text-white border-4 border-bauhaus-black px-8 py-3 font-bold uppercase text-xl hover:translate-y-1 hover:translate-x-1 hard-shadow-sm hover:shadow-none focus-visible:ring-4 focus-visible:ring-bauhaus-blue focus-visible:outline-none transition-all w-full cursor-pointer"
-            >
-              Play Now
-            </button>
+        {step === 2 && (
+          <motion.div 
+            key="step2"
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-white border-4 border-bauhaus-black hard-shadow-lg overflow-hidden max-w-3xl w-full flex flex-col md:flex-row"
+          >
+            <div className="p-8 md:w-1/2 flex flex-col justify-center">
+              <div className="flex items-center gap-3 mb-4">
+                <Swords className="text-bauhaus-red" size={32} />
+                <h2 className="text-3xl font-bold uppercase tracking-tight text-bauhaus-black">Advanced Mode</h2>
+              </div>
+              <p className="text-gray-600 font-medium mb-8 leading-relaxed text-lg">
+                In <span className="text-bauhaus-red font-bold">Advanced</span> mode, placing a tile that traps your opponent's tiles between two of yours will flip them to your color!
+              </p>
+              
+              <div className="flex gap-4 mt-auto">
+                <button 
+                  onClick={onNext} 
+                  className="flex-1 bg-bauhaus-red text-white border-2 border-bauhaus-black px-6 py-3 font-bold uppercase text-xl hover:translate-y-1 hover:translate-x-1 hard-shadow-sm hover:shadow-none focus-visible:ring-4 focus-visible:ring-bauhaus-blue focus-visible:outline-none transition-all w-full cursor-pointer"
+                >
+                  Play Now
+                </button>
+              </div>
+            </div>
+            <div className="bg-bauhaus-red/10 md:w-1/2 p-8 flex items-center justify-center border-t-4 md:border-t-0 md:border-l-4 border-bauhaus-black">
+              <div className="grid grid-cols-5 gap-1 p-1 bg-bauhaus-black border-4 border-bauhaus-black hard-shadow-sm w-full h-16">
+                <div className="bg-bauhaus-red w-full h-full" />
+                <motion.div 
+                  animate={{ backgroundColor: ['#2B67F6', '#2B67F6', '#E8312B', '#E8312B'] }}
+                  transition={{ repeat: Infinity, duration: 2.5, times: [0, 0.4, 0.6, 1] }}
+                  className="w-full h-full" 
+                />
+                <motion.div 
+                  animate={{ backgroundColor: ['#2B67F6', '#2B67F6', '#E8312B', '#E8312B'] }}
+                  transition={{ repeat: Infinity, duration: 2.5, times: [0, 0.4, 0.6, 1] }}
+                  className="w-full h-full" 
+                />
+                <motion.div 
+                  animate={{ backgroundColor: ['#FFFFFF', '#fca5a5', '#E8312B', '#E8312B'] }}
+                  transition={{ repeat: Infinity, duration: 2.5, times: [0, 0.3, 0.5, 1] }}
+                  className="w-full h-full relative" 
+                >
+                  <motion.div 
+                    animate={{ opacity: [0, 1, 0, 0] }}
+                    transition={{ repeat: Infinity, duration: 2.5, times: [0, 0.15, 0.3, 1] }}
+                    className="absolute inset-0 flex items-center justify-center"
+                  >
+                    <MousePointerClick size={20} className="text-bauhaus-black" />
+                  </motion.div>
+                </motion.div>
+                <div className="bg-white w-full h-full" />
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -543,8 +615,8 @@ export default function App() {
     }
   }, [currentPlayer, gameMode, gameRules, aiDifficulty, grid, winner, makeMove, playChunk]);
 
-  if (onboardingStep < 2) {
-    return <Onboarding step={onboardingStep} onNext={() => setOnboardingStep(s => s + 1)} />;
+  if (onboardingStep < 3) {
+    return <Onboarding step={onboardingStep} onNext={() => setOnboardingStep(s => s + 1)} onSkip={() => setOnboardingStep(3)} />;
   }
 
   return (
