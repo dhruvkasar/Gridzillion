@@ -1,0 +1,17 @@
+{
+  "name": "Gridzillion - Color War",
+  "short_name": "Gridzillion",
+  "description": "A 2-player territory game played on a color-blocked Bauhaus grid.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F0F0F0",
+  "theme_color": "#F0C020",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23D02020%22/></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

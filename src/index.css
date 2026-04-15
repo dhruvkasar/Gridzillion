@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --color-bauhaus-bg: #F0F0F0;
+  --color-bauhaus-red: #D02020;
+  --color-bauhaus-blue: #1040C0;
+  --color-bauhaus-yellow: #F0C020;
+  --color-bauhaus-black: #121212;
+}
+
+body {
+  background-color: var(--color-bauhaus-bg);
+  color: var(--color-bauhaus-black);
+  font-family: var(--font-sans);
+  font-weight: 900;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.hard-shadow {
+  box-shadow: 8px 8px 0px 0px var(--color-bauhaus-black);
+}
+
+.hard-shadow-sm {
+  box-shadow: 4px 4px 0px 0px var(--color-bauhaus-black);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-preview-red:hover {
+    background-color: var(--color-bauhaus-red) !important;
+    opacity: 0.5 !important;
+  }
+  .hover-preview-blue:hover {
+    background-color: var(--color-bauhaus-blue) !important;
+    opacity: 0.5 !important;
+  }
+}
