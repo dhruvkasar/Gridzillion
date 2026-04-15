@@ -1,20 +1,33 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Color War 🔴🔵
 
-# Run and deploy your AI Studio app
+A strategic game of territorial dominance built with React, TypeScript, and Tailwind CSS. Paint the grid, trap your opponent, and claim the most squares to win!
 
-This contains everything you need to run your app locally.
+## 🎮 Overview
+Experience a beautiful Bauhaus-inspired UI with smooth animations and dynamic audio.
 
-View your app in AI Studio: https://ai.studio/apps/cb09f160-7371-447d-9432-1601c3beab46
+### Features
+* **Game Modes:** Play locally against a friend (PvP) or challenge the AI (PvE).
+* **AI Difficulties:** Choose from Easy, Medium, Hard, or **Pro** (powered by a Minimax algorithm with Alpha-Beta pruning for deep strategic look-ahead).
+* **Rule Sets:**
+  * **Classic:** Place tiles adjacent to your existing territory to slowly expand.
+  * **Advanced:** Flank and trap your opponent's tiles to flip them to your color (Othello/Reversi style).
+* **Dynamic Grid Sizes:** Play on 6x6, 8x8, 10x10, or 12x12 grids.
+* **Interactive Onboarding:** A 3-step animated tutorial to teach new players the mechanics.
+* **Dynamic Audio:** Generative Web Audio API soundscapes that create a unique victory melody based on the final grid pattern.
+* **Responsive Design:** A fully responsive, single-screen layout that works perfectly on desktop and mobile without scrolling.
 
-## Run Locally
+## 🛠️ Tech Stack
+* **Frontend Framework:** React 18
+* **Language:** TypeScript
+* **Styling:** Tailwind CSS
+* **Animations:** Framer Motion
+* **Icons:** Lucide React
+* **Audio:** Native Web Audio API
 
-**Prerequisites:**  Node.js
+## 📖 How to Play
+1. **The Objective:** Have the most squares of your color when the board is completely full.
+2. **Basic Rules:** You can only place a tile adjacent to an existing tile on the board. Block your opponent's path to limit their moves and control the board.
+3. **Advanced Mode:** Placing a tile that traps your opponent's tiles between two of yours will flip them to your color!
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 👨‍💻 Authors
+Built by **Dhruv Kasar** and **Harshil**.
