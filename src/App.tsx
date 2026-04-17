@@ -179,7 +179,8 @@ function minimax(grid: number[][], depth: number, alpha: number, beta: number, i
 
   if (isMaximizing) {
     let maxEval = -Infinity;
-    for (const move of moves) {
+    
+    const scoredMoves = moves.map(move => {
       let nextGrid;
       if (rules === 'advanced') {
         nextGrid = applyFlanking(grid, move.r, move.c, player).newGrid;
@@ -187,6 +188,11 @@ function minimax(grid: number[][], depth: number, alpha: number, beta: number, i
         nextGrid = grid.map(row => [...row]);
         nextGrid[move.r][move.c] = player;
       }
+      return { nextGrid, baseScore: evaluateGrid(nextGrid, rules) };
+    });
+    scoredMoves.sort((a, b) => b.baseScore - a.baseScore);
+
+    for (const { nextGrid } of scoredMoves) {
       const ev = minimax(nextGrid, depth - 1, alpha, beta, false, rules);
       maxEval = Math.max(maxEval, ev);
       alpha = Math.max(alpha, ev);
@@ -195,7 +201,8 @@ function minimax(grid: number[][], depth: number, alpha: number, beta: number, i
     return maxEval;
   } else {
     let minEval = Infinity;
-    for (const move of moves) {
+
+    const scoredMoves = moves.map(move => {
       let nextGrid;
       if (rules === 'advanced') {
         nextGrid = applyFlanking(grid, move.r, move.c, player).newGrid;
@@ -203,6 +210,12 @@ function minimax(grid: number[][], depth: number, alpha: number, beta: number, i
         nextGrid = grid.map(row => [...row]);
         nextGrid[move.r][move.c] = player;
       }
+      return { nextGrid, baseScore: evaluateGrid(nextGrid, rules) };
+    });
+    // For minimizing, we want to look at moves that give the *lowest* score first
+    scoredMoves.sort((a, b) => a.baseScore - b.baseScore);
+
+    for (const { nextGrid } of scoredMoves) {
       const ev = minimax(nextGrid, depth - 1, alpha, beta, true, rules);
       minEval = Math.min(minEval, ev);
       beta = Math.min(beta, ev);
@@ -220,9 +233,12 @@ function getBestMove(grid: number[][], moves: {r: number, c: number}[], rules: G
   if (difficulty === 'pro') {
     let bestMoves = [moves[0]];
     let maxScore = -Infinity;
-    const depth = 3; // Increased depth for pro
     
-    for (const move of moves) {
+    // Dynamic depth based on grid size and branching factor
+    const depth = grid.length <= 8 ? 4 : 3; 
+
+    // Move ordering to optimize Alpha-Beta pruning
+    const scoredMoves = moves.map(move => {
       let nextGrid;
       if (rules === 'advanced') {
         nextGrid = applyFlanking(grid, move.r, move.c, 2).newGrid;
@@ -230,6 +246,13 @@ function getBestMove(grid: number[][], moves: {r: number, c: number}[], rules: G
         nextGrid = grid.map(row => [...row]);
         nextGrid[move.r][move.c] = 2;
       }
+      return { move, nextGrid, baseScore: evaluateGrid(nextGrid, rules) };
+    });
+    
+    // Sort moves descending by base score for maximum cutoff
+    scoredMoves.sort((a, b) => b.baseScore - a.baseScore);
+    
+    for (const { move, nextGrid } of scoredMoves) {
       const score = minimax(nextGrid, depth - 1, -Infinity, Infinity, false, rules);
       if (score > maxScore) {
         maxScore = score;
