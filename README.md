@@ -1,4 +1,4 @@
-# Color War 🔴🔵
+# Gridzillion 🔴🔵
 
 A strategic game of territorial dominance built with React, TypeScript, and Tailwind CSS. Paint the grid, trap your opponent, and claim the most squares to win!
 

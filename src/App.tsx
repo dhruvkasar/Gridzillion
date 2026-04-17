@@ -333,7 +333,7 @@ const Onboarding = ({ step, onNext, onSkip }: { step: number, onNext: () => void
                 <h2 className="text-3xl font-bold uppercase tracking-tight text-bauhaus-black">The Objective</h2>
               </div>
               <p className="text-gray-600 font-medium mb-8 leading-relaxed text-lg">
-                Color War is a strategic game of territorial expansion. Your goal is simple: have the most squares of your color when the board is completely full.
+                Gridzillion is a strategic game of territorial expansion. Your goal is simple: have the most squares of your color when the board is completely full.
               </p>
               
               <div className="flex gap-4 mt-auto">
@@ -513,8 +513,8 @@ export default function App() {
 
   const handleShare = async () => {
     const shareData = {
-      title: 'Gridzillion - Color War',
-      text: 'Paint the grid. Claim territory. Play Color War with me!',
+      title: 'Gridzillion',
+      text: 'Paint the grid. Claim territory. Play Gridzillion with me!',
       url: window.location.href
     };
     try {
@@ -629,7 +629,7 @@ export default function App() {
               <rect x="12" y="8" width="16" height="16" fill="var(--color-bauhaus-blue)" stroke="var(--color-bauhaus-black)" strokeWidth="2" />
               <polygon points="20,4 32,28 8,28" fill="var(--color-bauhaus-yellow)" stroke="var(--color-bauhaus-black)" strokeWidth="2" opacity="0.9" />
             </svg>
-            <h1 className="text-4xl sm:text-5xl tracking-tighter uppercase text-bauhaus-black mt-1">Color War</h1>
+            <h1 className="text-4xl sm:text-5xl tracking-tighter uppercase text-bauhaus-black mt-1">Gridzillion</h1>
           </div>
           <div className="flex gap-4">
             <button 
